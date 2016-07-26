@@ -15,7 +15,7 @@ python main.py commands
 |a|b|
 
 ####Example
-	python main.py -d -mat gaussian 128 -o -nit 20 -c 0.1 -map logistic
+	python main.py -d -mat gaussian 256 -o -nit 20 -c 0.1 -map logistic
 Outputs:
-
+![mapExampleIt19](/cml/output/it19.png)
 
