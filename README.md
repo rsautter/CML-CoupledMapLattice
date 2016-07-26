@@ -1,10 +1,11 @@
-## 2D - CML
+# 2D - CML
+
 A simple model of 2D Coupled Map Lattice Model (reference: https://en.wikipedia.org/wiki/Coupled_map_lattice).
 
-Required python libraries:
-  *Matplotlib
-  *Numpy
-  *Scipy
+##Required python libraries:
+  * Matplotlib
+  * Numpy
+  * Scipy
 
 ###Running first example:
 python main.py
