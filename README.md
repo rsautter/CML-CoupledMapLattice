@@ -12,8 +12,8 @@ python main.py
 
 ###Syntax
 python main.py commands
-| Commands | | 
-| ------------- |
+ Commands | extra arguments description | 
+| ------------- | ------------- |
 | -d                  | display the last iteration of CML |
 | -mat type matlen    | initial condition type(gaussian or bessel), matlen(>0) | 
 | -map map            | type of map(logistic, som, doubling)| 
@@ -21,7 +21,7 @@ python main.py commands
 | -c coupling         | coupling factor(float)| 
 | -o                  | if set, saves each iteration png files| 
 | -h or --help        | display help | 
-| ------------- | 
+| ------------- | ------------- |
 
 ####Example
 python main.py -d -mat gaussian 128 -o -nit 20 -c 0.1 -map logistic
