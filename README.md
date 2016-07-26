@@ -8,7 +8,7 @@ A simple model of 2D Coupled Map Lattice Model (reference: https://en.wikipedia.
   * Scipy
 
 ###Running first example:
-python main.py
+    python main.py
 
 ###Syntax
 python main.py commands
