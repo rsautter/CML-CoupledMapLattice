@@ -14,10 +14,15 @@ A simple python model of 2D Coupled Map Lattice Model (reference: https://en.wik
 python main.py commands
 
 
-First Header | Second Header
+Command | What does
 ------------ | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
+-d | display the last iteration of CML
+-mat type matlen | initial condition type(gaussian or bessel), matlen(integer>0)
+-map map | initial condition type(gaussian or bessel), matlen(integer>0)
+-nit nit | number of iterations
+-c coupling | coupling factor(float)
+-o | if set  saves each iteration png files
+-h or --help | display help
 
 
 ####Example
