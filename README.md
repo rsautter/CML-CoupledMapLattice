@@ -21,7 +21,7 @@ Command | What does
 -map map | initial condition type(gaussian or bessel), matlen(integer>0)
 -nit nit | number of iterations
 -c coupling | coupling factor(float)
--o | if set  saves each iteration png files
+-o | if set, saves each iteration in png files
 -h or --help | display help
 
 
