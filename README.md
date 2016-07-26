@@ -2,7 +2,7 @@
 
 A simple python model of 2D Coupled Map Lattice Model (reference: https://en.wikipedia.org/wiki/Coupled_map_lattice).
 
-In curently version, have implemented: 
+In curently version: 
 * Von Neumann neighborhood 
 * 3 maps
 * 2 initial conditions
