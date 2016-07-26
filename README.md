@@ -1,4 +1,4 @@
-# 2D - CML
+## 2D - CML
 A simple model of 2D Coupled Map Lattice Model (reference: https://en.wikipedia.org/wiki/Coupled_map_lattice).
 
 Required python libraries:
@@ -6,10 +6,10 @@ Required python libraries:
   2.Numpy
   3.Scipy
 
-#Running first example:
+###Running first example:
 python main.py
 
-#Syntax
+###Syntax
 python main.py commands
 Commands
 -d                  |display the last iteration of CML
@@ -19,6 +19,6 @@ Commands
 -c coupling         | coupling factor(float)
 -o                  | if set, saves each iteration png files
 -h or --help        | display help
-e.g.
+####Example
 python main.py -d -mat gaussian 128 -o -nit 20 -c 0.1 -map logistic
 
