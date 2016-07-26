@@ -2,6 +2,11 @@
 
 A simple python model of 2D Coupled Map Lattice Model (reference: https://en.wikipedia.org/wiki/Coupled_map_lattice).
 
+In curently version, have implemented: 
+* Von Neumann neighborhood 
+* 3 maps
+* 2 initial conditions
+
 ###Required python libraries:
   * Matplotlib
   * Numpy
@@ -14,11 +19,11 @@ A simple python model of 2D Coupled Map Lattice Model (reference: https://en.wik
 python main.py commands
 
 
-Command | What does
+Command | Arguments description
 ------------ | -------------
--d | display the last iteration of CML
--mat type matlen | initial condition type(gaussian or bessel), matlen(integer>0)
--map map | initial condition type(gaussian or bessel), matlen(integer>0)
+-d | Display CML last iteration
+-mat type matlen | initial condition type (gaussian or bessel), matlen(integer>0)
+-map map | type of map (logistic, doubling, som)
 -nit nit | number of iterations
 -c coupling | coupling factor(float)
 -o | if set, saves each iteration in png files
