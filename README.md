@@ -28,6 +28,7 @@ Command | Arguments description
 -nit nit | number of iterations
 -c coupling | coupling factor(float)
 -o | if set, saves each iteration in png files
+-csv | if set, saves each iteration in csv files
 -h or --help | display help
 
 
