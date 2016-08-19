@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import CML
 import maps
 import sys
+import numpy as np
 
 def plot(mat):
     plt.clf()
@@ -34,6 +35,7 @@ if __name__ == "__main__":
         print('-nit nit: number of iterations')
         print('-c coupling: coupling factor(float)')
         print('-o: if set, saves each iteration png files')
+        print('-csv: if set, saves each iteration csv files')
         print('-h or --help: display help')
         print('================================')
         exit()
@@ -73,6 +75,8 @@ if __name__ == "__main__":
         if ('-o' in sys.argv):
             plot(c.mat)
             plt.savefig('output/it'+str(i)+'.png')
+        if ('-csv' in sys.argv):
+            np.savetxt('output/it'+str(i)+'.csv', c.mat)
         c.getCML(neigh,mapCML,coupling)
     if ('-d' in sys.argv):
         plot(c.mat)

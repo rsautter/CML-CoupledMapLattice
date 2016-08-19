@@ -1,5 +1,5 @@
 from scipy import special as sp
-import numpy
+import numpy as np
 import math
 import random
 
@@ -20,6 +20,10 @@ class CML():
         m = [[(10.0 * x / n - 5.0) ** 2.0 + (10.0 * y / n - 5.0) ** 2.0
             for x in range(0, n, 1)] for y in range(0, n, 1)]
         zBessel = sp.j0(m)
+        minimo = np.min(zBessel)
+        zBessel = zBessel - minimo
+        maximo = np.max(zBessel)
+        zBessel = zBessel / maximo
         return zBessel
         
     def __gaussian(self,x, y, meanX, meanY, stddev):
