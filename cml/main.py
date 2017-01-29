@@ -13,13 +13,16 @@ def plot(mat):
 def setMap(mapping):
     if(mapping=='logistic'):
         cmlMap = maps.logisticMap
+        par = [4.0]
     elif(mapping=='doubling'):
         cmlMap = maps.doublingMap
+        par = []
     elif(mapping=='SOM'):
         cmlMap = maps.somMap
+        par = [0.6,0.2]
     else:
         raise Exception('Unsupported map',mapping)
-    return cmlMap
+    return cmlMap, par
 
 if __name__ == "__main__":
     if('-h' in sys.argv) or ('--help' in sys.argv):
@@ -66,7 +69,7 @@ if __name__ == "__main__":
         #elif(sys.argv[it] != '-d') and (sys.argv[it] != '-o'):
             #print("Warning! Non used argument: "+(sys.argv[it]))
 
-    mapCML=setMap(mapping)
+    mapCML,par=setMap(mapping)
     if(initialMat=='gaussian') or (initialMat=='bessel') :
         c = CML.CML(initialMat,matLen)
     else:
@@ -77,7 +80,7 @@ if __name__ == "__main__":
             plt.savefig('output/it'+str(i)+'.png')
         if ('-csv' in sys.argv):
             np.savetxt('output/it'+str(i)+'.csv', c.mat)
-        c.getCML(neigh,mapCML,coupling)
+        c.getCML(neigh,mapCML,coupling,par)
     if ('-d' in sys.argv):
         plot(c.mat)
         plt.show()
