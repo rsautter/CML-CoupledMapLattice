@@ -8,15 +8,15 @@ In curently version was implemented:
 * 3 maps
 * 2 initial conditions
 
-###Required python libraries:
+### Required python libraries:
   * Matplotlib
   * Numpy
   * Scipy
 
-###Running first example:
+### Running first example:
 	python main.py
 
-###Syntax
+### Syntax
 python main.py commands
 
 
@@ -32,7 +32,7 @@ Command | Arguments description
 -h or --help | display help
 
 
-####Example
+#### Example
 	python main.py -d -mat gaussian 256 -o -nit 20 -c 0.1 -map logistic
 
 
