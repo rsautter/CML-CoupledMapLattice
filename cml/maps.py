@@ -10,6 +10,13 @@ def logisticMap(x, par):
     else:
         a = 4.0
     return (a * x * (1.0 - x))
+
+def dlogisticMap(x, par):
+    if(len(par)>0):
+        a = par[0]
+    else:
+        a = 4.0
+    return (a -2.0*a*x) 
     
 def somMap(x, par):
     a = par[0]

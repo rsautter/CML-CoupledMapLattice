@@ -3,6 +3,8 @@ import CML
 import maps
 import sys
 import numpy as np
+import math
+from scipy.sparse.linalg import eigs
 
 def plot(mat):
     plt.clf()
@@ -33,13 +35,16 @@ if __name__ == "__main__":
         print('Commands:')
         print('================================')
         print('-d: display the last iteration of CML')
-        print('-mat type matlen: initial condition type(gaussian or bessel), matlen(>0)')
-        print('-map map: type of map(logistic, som, doubling)')
-        print('-nit nit: number of iterations')
+        print('-mat <type> <matlen>: initial condition type(random, gaussian or bessel), matlen(>0)')
+        print('-map <map>: type of map(logistic, som, doubling)')
+        print('-nit <nit>: number of iterations')
+	print('-grad <x> <y>: save the gradient from x, y in gradientSeries.csv')
         print('-c coupling: coupling factor(float)')
         print('-o: if set, saves each iteration png files')
         print('-csv: if set, saves each iteration csv files')
+	print('-lyap: if set, measures the lyapunov exponent (only for logistic)')
         print('-h or --help: display help')
+	
         print('================================')
         exit()
     
@@ -61,6 +66,11 @@ if __name__ == "__main__":
                 nit=int(sys.argv[it+1])
             else:
                 raise Exception('Wrong Syntax','-nit')
+	elif(sys.argv[it] == '-grad'):
+	    if(it+2 < len(sys.argv)):
+		x, y = int(sys.argv[it+1]),int(sys.argv[it+2])
+	    else:
+		raise Exception('Wrong Syntax','-grad')
         elif(sys.argv[it] == '-c'):
             if(it+1 < len(sys.argv)):
                 coupling=float(sys.argv[it+1])
@@ -70,17 +80,35 @@ if __name__ == "__main__":
             #print("Warning! Non used argument: "+(sys.argv[it]))
 
     mapCML,par=setMap(mapping)
-    if(initialMat=='gaussian') or (initialMat=='bessel') :
+    grad = []
+    if(initialMat=='gaussian') or (initialMat=='bessel') or (initialMat=='random'):
         c = CML.CML(initialMat,matLen)
     else:
         raise Exception('Unknown matrix type')
+    csum=0.0
+    nsum=0
     for i in range(nit):
         if ('-o' in sys.argv):
             plot(c.mat)
             plt.savefig('output/it'+str(i)+'.png')
         if ('-csv' in sys.argv):
             np.savetxt('output/it'+str(i)+'.csv', c.mat)
+        if ('-grad' in sys.argv):
+	    mod, phase = c.getGradient(x,y)
+	    grad.append([mod,phase])
+            np.savetxt('output/gradientSeries.csv',grad,header='mod,phase',comments='',delimiter=',')
         c.getCML(neigh,mapCML,coupling,par)
+	
+	if('-lyap' in sys.argv) and (mapping == 'logistic'):
+		try:
+			jac = c.getJacobian(maps.dlogisticMap,coupling,par)
+			vals,vecs = eigs(jac,k=matLen-1)
+			csum += np.max(np.real(vals))
+			nsum=nsum+1
+			print(str(i)+" - Lyapunov: ",np.log(math.fabs(csum/float(nsum))))
+		except:
+			print("Not convergent for ",i)
+	
     if ('-d' in sys.argv):
         plot(c.mat)
         plt.show()
