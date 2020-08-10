@@ -33,7 +33,7 @@ Command | Arguments description
 
 
 #### Example
-	python main.py -d -mat gaussian 256 -o -nit 20 -c 0.1 -map logistic 3.8
+	python main.py -d -mat gaussian 256 -o -nit 20 -c 0.1 -map logistic 4.0
 
 
 Outputs:
