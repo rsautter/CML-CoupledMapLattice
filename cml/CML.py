@@ -6,7 +6,7 @@ import scipy.sparse as sparse
 
 class CML():
 	def __init__(self, initialMatrix,msize = -1):
-		self.mat = self.__getGaussianMatrix(3)
+		#self.mat = self.__getGaussianMatrix(3)
 		if(initialMatrix == 'gaussian') and (msize>0):
 			self.mat = self.__getGaussianMatrix(msize)
 		elif(initialMatrix == 'bessel') and (msize>0):
@@ -40,17 +40,27 @@ class CML():
 		m = [[self.__gaussian(10.0 * float(x) / n, 10.0 * float(y) / n, 5.0, 5.0, 1.5)
 				for x in range(0, n, 1)] for y in range(0, n, 1)]
 		return m
-
+	
+	def __toVectorCoord(self,x,y):
+		rows, cols= len(self.mat),len(self.mat[0])
+		return (x+y*rows)%(rows*cols)
+	
 	def getJacobian(self,function,coupling,parameters=[]):
 		rows, cols= len(self.mat),len(self.mat[0])
 		jac = [[ 0.0  for j in range(cols*rows)]for i in range(cols*rows)]
 		for i in range(rows):
 			for j in range(cols):
-				jac[i+j*rows][i+j*rows] = (1.0-coupling)*function(self.mat[i][j],parameters)
-				jac[i+j*rows][((i+1)+j*rows+cols*rows)%(rows*cols)] = (coupling/4.0)*function(self.mat[(i+1)%rows][j],parameters)
-				jac[i+j*rows][((i-1)+j*rows+cols*rows)%(rows*cols)] = (coupling/4.0)*function(self.mat[(i-1+rows)%rows][j],parameters)
-				jac[i+j*rows][(i+(j+1)*rows+cols*rows)%(rows*cols)] = (coupling/4.0)*function(self.mat[i][(j+1)%cols],parameters)
-				jac[i+j*rows][(i+(j-1)*rows+cols*rows)%(cols*rows)] = (coupling/4.0)*function(self.mat[i][(j-1+cols)%cols],parameters)
+				c1 = self.__toVectorCoord(i,j)
+				jac[c1][c1] = (1.0-coupling)*function(self.mat[i][j],parameters)
+				i2 = (i+1)%rows
+				jac[c1][self.__toVectorCoord(i2,j)] = (coupling/4.0)*function(self.mat[i2][j],parameters)
+				i2 = (i-1+rows)%rows
+				jac[c1][self.__toVectorCoord(i2,j)] = (coupling/4.0)*function(self.mat[i2][j],parameters)
+				j2 = (j+1)%cols
+				jac[c1][self.__toVectorCoord(i,j2)] = (coupling/4.0)*function(self.mat[i][j2],parameters)
+				j2 = (j-1+cols)%cols
+				jac[c1][self.__toVectorCoord(i,j2)] = (coupling/4.0)*function(self.mat[i][j2],parameters)
+		#np.savetxt("testeJac.txt",jac,fmt="%.6f")
 		return sparse.coo_matrix(jac)
 
 	def getCMLNeumann(self, mat,function, coupling,parameters=[]):
@@ -69,9 +79,9 @@ class CML():
 		cols = len(self.mat[0])
 		for i in range(rows):
 			for j in range(cols):
-				outputMat[i][j] = coupling * function(self.mat[i][j],parameters)
+				outputMat[i][j] = (1.0-coupling) * function(self.mat[i][j],parameters)
 				for n in neighborhood:
-					outputMat[i][j] += ((1.0 - coupling) / 4.0) * function(self.mat[(i+n[1]+rows) % rows][(j+n[0]+cols) % cols],parameters)
+					outputMat[i][j] += (coupling/float(len(neighborhood))) * function(self.mat[(i+n[1]+rows) % rows][(j+n[0]+cols) % cols],parameters)
 		self.mat = outputMat
 		return outputMat
 

@@ -10,6 +10,20 @@ def logisticMap(x, par):
     else:
         a = 4.0
     return (a * x * (1.0 - x))
+    
+def kanekoMap(x, par):
+    if(len(par)>0):
+        a = par[0]
+    else:
+        a = 4.0
+    return (1.0 - a*(x**2.0))
+
+def dkanekoMap(x, par):
+    if(len(par)>0):
+        a = par[0]
+    else:
+        a = 4.0
+    return -2.0*a*x
 
 def dlogisticMap(x, par):
     if(len(par)>0):
