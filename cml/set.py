@@ -106,10 +106,13 @@ if __name__ == "__main__":
 			lyap = []
 			lyapMax = []
 			print(coupling,alpha)
+			c = CML.CML(initialMat,matLen)
 			for i in range(nit):
 				par = [alpha]
 				c.getCML(neigh,mapCML,coupling,par)
 				if i<nit-nlyap:
+					continue
+				if not('-lyap' in sys.argv):
 					continue
 				try:
 					jac = c.getJacobian(maps.dlogisticMap,coupling,par)
@@ -128,12 +131,17 @@ if __name__ == "__main__":
 				except ArpackError:
 					print("Not convergent for ",i," (LR)")
 				#print("Lyapunov: ",np.mean(lyap),"(LM)",np.mean(lyapMax),"(LR)")
-				
+			if '-d' in sys.argv:
+				np.savetxt("output/"+str(alpha)+"_"+str(coupling)+".txt",c.mat)
+				plt.clf()
+				plot(c.mat)
+				plt.savefig("output/"+str(alpha)+"_"+str(coupling)+".png")
 			print("Lyapunov: ",np.mean(lyap),"(LM)",np.mean(lyapMax),"(LR)")
 			mat[x].append(np.mean(lyap))
 			matMax[x].append(np.mean(lyapMax))
 			y=y+1
 		x = x+1 
+	plt.clf()
 	plt.imshow(np.transpose(mat),extent=[cmin,cmax,amin,amax],origin="lower",interpolation="bilinear",cmap=plt.get_cmap('seismic'))
 	plt.colorbar()
 	plt.savefig("Lyap.png")
